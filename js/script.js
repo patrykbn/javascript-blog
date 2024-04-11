@@ -4,6 +4,7 @@
     const links = document.querySelectorAll('.titles a');
     console.log('links:', links);
   });*/
+
 const titleClickHandler = function(event){
     event.preventDefault();
     const clickedElement = this;
@@ -39,3 +40,8 @@ const links = document.querySelectorAll('.titles a');
 for(let link of links){
     link.addEventListener('click', titleClickHandler);
 }
+
+const generateTitleLinks = function(){
+    console.log('Title Links Generated!')
+}
+generateTitleLinks();
