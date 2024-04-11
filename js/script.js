@@ -4,7 +4,7 @@
     const links = document.querySelectorAll('.titles a');
     console.log('links:', links);
   });*/
-
+{
 const titleClickHandler = function(event){
     event.preventDefault();
     const clickedElement = this;
@@ -35,13 +35,60 @@ const titleClickHandler = function(event){
     clickedArticle.classList.add('active');
 }
 
-const links = document.querySelectorAll('.titles a');
+//const links = document.querySelectorAll('.titles a');
+//console.log(links);
 
-for(let link of links){
-    link.addEventListener('click', titleClickHandler);
-}
+//for(let link of links){
+    //link.addEventListener('click', titleClickHandler);
+//}
+
+const optArticleSelector = '.post',
+    optTitleSelector = '.post-title',
+    optTitleListSelector= '.titles';
 
 const generateTitleLinks = function(){
-    console.log('Title Links Generated!')
-}
+    console.log('Title Links Generated!');
+    //delete contents of link list in left table
+    const titleList = document.querySelector(optTitleListSelector);
+    titleList.innerHTML = '';
+    //for every article:
+    const articles = document.querySelectorAll(optArticleSelector);
+    //console.log(articles);
+
+    let html = '';
+
+    for(let article of articles){
+        const articleId = article.getAttribute('id');
+        //console.log(articleId);
+        const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+        //console.log(articleTitle);
+
+        const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+        //console.log(linkHTML);
+
+        //titleList.innerHTML = titleList.innerHTML +linkHTML;
+        //titleList.insertAdjacentHTML("beforeend", linkHTML);
+        //console.log(titleList);
+        html = html + linkHTML;
+
+        console.log(html);
+    }
+
+    titleList.innerHTML = html;
+
+    const links = document.querySelectorAll('.titles a');
+    console.log(links);
+
+    for(let link of links){
+        link.addEventListener('click', titleClickHandler);
+    }
+    }
+
+    //read its id and save as const
+    //find element with article title and save its content to a const
+    //using saved consts create HTML link code and save it as a new const
+    //Insert created HTML link code to link list in left table
+
 generateTitleLinks();
+
+}
