@@ -44,15 +44,17 @@ const titleClickHandler = function(event){
 
 const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
-    optTitleListSelector= '.titles';
+    optTitleListSelector = '.titles',
+    optArticleTagsSelector = '.post-tags .list';
 
-const generateTitleLinks = function(){
+//const generateTitleLinks = function(){
+    function generateTitleLinks(customSelector = ''){
     console.log('Title Links Generated!');
     //delete contents of link list in left table
     const titleList = document.querySelector(optTitleListSelector);
     titleList.innerHTML = '';
     //for every article:
-    const articles = document.querySelectorAll(optArticleSelector);
+    const articles = document.querySelectorAll(optArticleSelector + customSelector);
     //console.log(articles);
 
     let html = '';
@@ -91,4 +93,85 @@ const generateTitleLinks = function(){
 
 generateTitleLinks();
 
+function generateTags(){
+    /* find all articles */
+    const articles = document.querySelectorAll(optArticleSelector);
+    console.log(articles);
+    /* START LOOP: for every article: */
+    for(let article of articles){
+        /* find tags wrapper */
+        const tagList = article.querySelector(optArticleTagsSelector);
+        console.log(tagList);
+        /* get tags from data-tags attribute */
+        const articleTags = article.getAttribute('data-tags');
+        console.log(articleTags);
+        /* make html variable with empty string */
+        let html = '';
+        /* split tags into array */
+        const articleTagsArray = articleTags.split(' ');
+        console.log(articleTagsArray);
+      /* START LOOP: for each tag */
+        for(let tag of articleTagsArray){
+            /* generate HTML of the link */
+            const tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+            html = html + tagHTML;
+            /* add generated code to html variable */
+        }
+        /* END LOOP: for each tag */
+        console.log(html);
+        tagList.innerHTML = html;
+         /* insert HTML of all the links into the tags wrapper */
+    }
+    /* END LOOP: for every article: */
+  }
+  generateTags();
+
+  function tagClickHandler(event){
+    event.preventDefault();
+    /* prevent default action for this event */
+    const clickedElement = this;
+    /* make new constant named "clickedElement" and give it the value of "this" */
+    const href = clickedElement.getAttribute('href');
+    console.log(href);
+    /* make a new constant "href" and read the attribute "href" of the clicked element */
+    //const tag = clickedElement.querySelector(href);
+    const tag = href.replace('#tag-', '');
+    console.log(tag);
+    /* make a new constant "tag" and extract tag from the "href" constant */
+    const activeTags = document.querySelectorAll('a.active[href^="#tag-"]');
+    /* find all tag links with class active */
+    for(let activeTag of activeTags){
+    /* START LOOP: for each active tag link */
+        activeTag.classList.remove('active');
+      /* remove class active */
+    }
+    /* END LOOP: for each active tag link */
+
+    const tagLinks = document.querySelectorAll('a[href="' + href + '"]');
+    /* find all tag links with "href" attribute equal to the "href" constant */
+    for(let tagLink of tagLinks){
+    /* START LOOP: for each found tag link */
+        tagLink.classList.add('active');
+      /* add class active */
+    }
+    /* END LOOP: for each found tag link */
+    generateTitleLinks('[data-tags~="' + tag + '"]');
+    /* execute function "generateTitleLinks" with article selector as argument */
+}
+  function addClickListenersToTags(){
+    /* find all links to tags */
+    const tagLinks = document.querySelectorAll('.post-tags .list a');
+    console.log(tagLinks);
+
+    for(let tagLink of tagLinks){
+        tagLink.addEventListener('click', tagClickHandler);
+    }
+    /* START LOOP: for each link */
+  
+      /* add tagClickHandler as event listener for that link */
+  
+    /* END LOOP: for each link */
+  }
+
+  addClickListenersToTags();
 }
