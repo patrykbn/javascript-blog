@@ -45,7 +45,8 @@ const titleClickHandler = function(event){
 const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
-    optArticleTagsSelector = '.post-tags .list';
+    optArticleTagsSelector = '.post-tags .list',
+    optTagsListSelector = '.tags .list';
 
 //const generateTitleLinks = function(){
     function generateTitleLinks(customSelector = ''){
@@ -234,11 +235,59 @@ function generateAuthors(){
         authorLink.addEventListener('click', authorClickHandler);
     }
     /* START LOOP: for each link */
-  
       /* add tagClickHandler as event listener for that link */
-  
     /* END LOOP: for each link */
   }
 
   addClickListenersToAuthors();
+
+  function generateTagsList(){
+    /* [NEW] create a new variable allTags with an empty array */
+    let allTags = [];
+  
+    /* find all articles */
+    const articles = document.querySelectorAll(optArticleSelector);
+
+    /* START LOOP: for every article: */
+    for(let article of articles){
+      /* find tags wrapper */
+        const tagsList = article.querySelector(optArticleTagsSelector);
+      
+      /* make html variable with empty string */
+        let HTML = '';
+
+      /* get tags from data-tags attribute */
+        const articleTags = article.getAttribute('data-tags');
+        console.log(articleTags);
+
+      /* split tags into array */
+        const tagsArray = articleTags.split(' ');
+        console.log(tagsArray);
+
+      /* START LOOP: for each tag */
+    for(let tagArray of tagsArray){
+        /* generate HTML of the link */
+        const linkHTML = '<li><a href="#tag-' + tagArray + '">' + tagArray + '</a></li>';
+        /* add generated code to html variable */
+        let HTML = HTML + linkHTML;
+        /* [NEW] check if this link is NOT already in allTags */
+        if(allTags.indexOf(linkHTML) == -1){
+          /* [NEW] add generated code to allTags array */
+          allTags.push(linkHTML);
+        }
+  
+      /* END LOOP: for each tag */
+    }
+      /* insert HTML of all the links into the tags wrapper */
+  
+    /* END LOOP: for every article: */
+  
+    /* [NEW] find list of tags in right column */
+    const tagList = document.querySelector(optTagsListSelector);
+  
+    /* [NEW] add html from allTags to tagList */
+    tagList.innerHTML = allTags.join(' ');
+  }
+}
+  generateTagsList();
 }
