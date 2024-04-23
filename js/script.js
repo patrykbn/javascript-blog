@@ -46,7 +46,7 @@ const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
-    optTagsListSelector = '.tags .list';
+    optTagsListSelector = '.tags.list';
 
 //const generateTitleLinks = function(){
     function generateTitleLinks(customSelector = ''){
@@ -179,7 +179,7 @@ function generateTags(){
 function generateAuthors(){
     //find all articles
     const articles = document.querySelectorAll(optArticleSelector);
-    console.log(articles);
+    //console.log(articles);
     // start loop for every article
     for(let article of articles){
         //get author from "data-Author"
@@ -247,39 +247,40 @@ function generateAuthors(){
   
     /* find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
-
+    //console.log(articles);
     /* START LOOP: for every article: */
     for(let article of articles){
       /* find tags wrapper */
         const tagsList = article.querySelector(optArticleTagsSelector);
-      
+        //console.log('tagslist', tagsList);
       /* make html variable with empty string */
         let HTML = '';
 
       /* get tags from data-tags attribute */
         const articleTags = article.getAttribute('data-tags');
-        console.log(articleTags);
+        //console.log(articleTags);
 
       /* split tags into array */
         const tagsArray = articleTags.split(' ');
-        console.log(tagsArray);
+        //console.log(tagsArray);
 
       /* START LOOP: for each tag */
     for(let tagArray of tagsArray){
         /* generate HTML of the link */
         const linkHTML = '<li><a href="#tag-' + tagArray + '">' + tagArray + '</a></li>';
         /* add generated code to html variable */
-        let HTML = HTML + linkHTML;
+        HTML = HTML + linkHTML;
         /* [NEW] check if this link is NOT already in allTags */
         if(allTags.indexOf(linkHTML) == -1){
           /* [NEW] add generated code to allTags array */
           allTags.push(linkHTML);
         }
-  
       /* END LOOP: for each tag */
     }
+    //console.log(HTML);
+    tagsList.innerHTML = HTML;
       /* insert HTML of all the links into the tags wrapper */
-  
+    }
     /* END LOOP: for every article: */
   
     /* [NEW] find list of tags in right column */
@@ -288,6 +289,6 @@ function generateAuthors(){
     /* [NEW] add html from allTags to tagList */
     tagList.innerHTML = allTags.join(' ');
   }
-}
+
   generateTagsList();
 }
