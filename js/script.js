@@ -48,9 +48,9 @@ const optArticleSelector = '.post',
     optArticleTagsSelector = '.post-tags .list',
     optTagsListSelector = '.tags.list',
     optCloudClassCount = 5,
-    optCloudClassCountAuhtors = 3,
+    optCloudClassCountAuhtors = 2,
     optCloudClassPrefix = 'tag-size-',
-    optAuthorsListSelector = 'list.authors'
+    optAuthorsListSelector = '.list.authors'
 
 //const generateTitleLinks = function(){
     function generateTitleLinks(customSelector = ''){
@@ -162,7 +162,7 @@ function calculatetagClass(count, params){
     const tagsParams = calculateTagsParams(allTags);
     //console.log('tagsParams', tagsParams);
     let allTagsHTML = '';
-    console.log('allTags', allTags);
+    //console.log('allTags', allTags);
 
     /* [NEW] START LOOP: for each tag in allTags: */
     for(let tag in allTags){
@@ -241,15 +241,15 @@ function calculateAuthorParams(authors){
     return params;
 }
 
-/*function calculateAuthorClass(count, params){
+function calculateAuthorClass(count, params){
     const classNumber = optCloudClassPrefix + Math.floor( ( (count - params.min) / (params.max - params.min) ) * optCloudClassCountAuhtors + 1);
-    console.log(classNumber);
+    //console.log(classNumber);
     return classNumber;
-}*/
+}
 
 function generateAuthors(){
     let allAuthors = {};
-    console.log(allAuthors);
+    //console.log(allAuthors);
     //find all articles
     const articles = document.querySelectorAll(optArticleSelector);
     //console.log(articles);
@@ -275,18 +275,15 @@ function generateAuthors(){
     const authorList = document.querySelector(optAuthorsListSelector);
     //find author list in right column
     const authorParams = calculateAuthorParams(allAuthors);
-    console.log('authorParams', authorParams);
+    //console.log('authorParams', authorParams);
     let authorListHTML = '';
-    console.log(authorList);
-    console.log(authorListHTML);
-    console.log(optCloudClassCountAuhtors);
+    //console.log('allAuthors',allAuthors);
 
-    /*for(let author of allAuthors){
+    for(let author in allAuthors){
         const authorLinkHTML = '<li><a class="' + calculateAuthorClass(allAuthors[author], authorParams) + '" href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')<a/></li>';
         authorListHTML += authorLinkHTML;
     }
     authorList.innerHTML = authorListHTML;
-    console.log(allAuthors);*/
     }
   
   generateAuthors();
