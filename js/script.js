@@ -212,12 +212,12 @@ function calculateTagClass(count, params){
     const clickedElement = this;
     /* make new constant named "clickedElement" and give it the value of "this" */
     const href = clickedElement.getAttribute('href');
-    //console.log(href);
+    console.log(href);
     /* make a new constant "href" and read the attribute "href" of the clicked element */
-    const tag = href.replace('#tag-', '');
+    const tag = href.replace('#', '');
     //console.log(tag);
     /* make a new constant "tag" and extract tag from the "href" constant */
-    const activeTags = document.querySelectorAll('a.active[href^="#tag-"]');
+    const activeTags = document.querySelectorAll('a.active[href^="#"]');
     /* find all tag links with class active */
     for(let activeTag of activeTags){
     /* START LOOP: for each active tag link */
